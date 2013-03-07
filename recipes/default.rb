@@ -19,6 +19,12 @@
 
 include_recipe 'build-essential'
 
+if node["platform_family"] == "rhel"
+  %w{ perl-ExtUtils-Embed perl-ExtUtils-MakeMaker }.each do |pkg|
+    package pkg
+  end
+end
+
 execute 'install collectd' do
   filename = File.basename(node['collectd']['url'])
   dirname = File.basename(node['collectd']['url'], ".tar.gz")
